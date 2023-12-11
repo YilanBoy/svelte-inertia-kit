@@ -10,8 +10,10 @@ export default defineConfig({
             refresh: true,
         }),
         svelte({
-            compilerOptions: {
-                hydratable: true,
+            onwarn(warning, defaultHandler) {
+                if (warning.code.startsWith("a11y-")) return;
+
+                defaultHandler(warning);
             },
         }),
     ],
