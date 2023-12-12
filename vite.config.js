@@ -10,8 +10,17 @@ export default defineConfig({
             refresh: true,
         }),
         svelte({
+            compilerOptions: {
+                hydratable: true,
+            },
             onwarn(warning, defaultHandler) {
-                if (warning.code.startsWith("a11y-")) return;
+                // Disable this false positive warning in Inertia.js
+                if (
+                    warning.code.startsWith(
+                        "a11y-no-static-element-interactions",
+                    )
+                )
+                    return;
 
                 defaultHandler(warning);
             },
